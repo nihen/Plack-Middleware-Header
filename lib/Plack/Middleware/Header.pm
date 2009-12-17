@@ -8,7 +8,7 @@ __PACKAGE__->mk_accessors(qw(set append unset));
  
 use Plack::Util;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
  
 sub call {
     my($self, $env) = @_;
