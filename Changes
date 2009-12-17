@@ -1,4 +1,7 @@
 Revision history for Perl extension Plack::Middleware::Header
 
+0.02  Thu Dec 17 07:51:49 UTC 2009
+        - Added Plack::Middleware dependency
+
 0.01  Thu Dec  3 22:19:13 2009
         - original version
