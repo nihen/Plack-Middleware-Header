@@ -11,8 +11,8 @@ SYNOPSIS
             unset => ['X-Plack-Three'];
           $app;
       };
-    =head1 DESCRIPTION
 
+DESCRIPTION
     Plack::Middleware::Header
 
 AUTHOR

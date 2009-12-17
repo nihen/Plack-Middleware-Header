@@ -48,6 +48,7 @@ Plack::Middleware::Header - modify HTTP response headers
         unset => ['X-Plack-Three'];
       $app;
   };
+
 =head1 DESCRIPTION
  
 Plack::Middleware::Header
