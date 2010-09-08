@@ -11,22 +11,28 @@ use Plack::Util;
 our $VERSION = '0.03';
  
 sub call {
-    my($self, $env) = @_;
+    my $self = shift; 
+    my $res  = $self->app->(@_);
  
-    my $res = $self->app->($env);
- 
-    my $headers = $res->[1];
-    if ( $self->set ) {
-        Plack::Util::header_iter($self->set, sub {Plack::Util::header_set($headers, @_)});
-    }
-    if ( $self->append ) {
-        push @$headers, @{$self->append};
-    }
-    if ( $self->unset ) {
-        Plack::Util::header_remove($headers, $_) for @{$self->unset};
-    }
- 
-    return $res;
+    $self->response_cb(
+        $res,
+        sub {
+            my $res = shift;
+            my $headers = $res->[1];
+
+            if ( $self->set ) {
+                Plack::Util::header_iter($self->set, sub {Plack::Util::header_set($headers, @_)});
+            }
+            if ( $self->append ) {
+            my $headers = $res->[1];
+                push @$headers, @{$self->append};
+            }
+            if ( $self->unset ) {
+            my $headers = $res->[1];
+                Plack::Util::header_remove($headers, $_) for @{$self->unset};
+            }
+        }
+    );
 }
  
 1;
