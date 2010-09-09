@@ -8,7 +8,7 @@ __PACKAGE__->mk_accessors(qw(set append unset));
  
 use Plack::Util;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
  
 sub call {
     my $self = shift; 

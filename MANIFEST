@@ -26,6 +26,7 @@ META.yml
 README
 t/00_compile.t
 t/01_basic.t
+t/02_delayed_response.t
 xt/perlcritic.t
 xt/pod.t
 xt/podspell.t
