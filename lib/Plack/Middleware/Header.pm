@@ -24,11 +24,9 @@ sub call {
                 Plack::Util::header_iter($self->set, sub {Plack::Util::header_set($headers, @_)});
             }
             if ( $self->append ) {
-            my $headers = $res->[1];
                 push @$headers, @{$self->append};
             }
             if ( $self->unset ) {
-            my $headers = $res->[1];
                 Plack::Util::header_remove($headers, $_) for @{$self->unset};
             }
         }
