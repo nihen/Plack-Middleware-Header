@@ -45,6 +45,7 @@ Plack::Middleware::Header - modify HTTP response headers
  
   use Plack::Builder;
  
+  my $app = sub {['200', [], ['hello']]};
   builder {
       enable 'Header',
         set => ['X-Plack-One' => '1'],
