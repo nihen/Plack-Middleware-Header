@@ -1,5 +1,9 @@
 Revision history for Perl extension Plack::Middleware::Header
 
+0.06  Thu Sep  9 06:30:43 UTC 2010
+       - added conditional argument 'when' (thanks to Jakob Voß)
+       - added conditional argument 'code' (thanks to Wallace Reis)
+
 0.04  Thu Sep  9 06:30:43 UTC 2010
         - support delayed response (thanks to Olaf Alders)
 

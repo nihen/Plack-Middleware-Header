@@ -3,24 +3,12 @@ package Plack::Middleware::Header;
 use strict;
 use 5.008_001;
 use parent qw(Plack::Middleware);
-use Plack::Util::Accessor qw(code set append unset);
+use Plack::Util::Accessor qw(set append unset code when);
 
 use Plack::Util;
+use Scalar::Util qw(reftype);
 
-our $VERSION = '0.051';
-
-sub mangle_headers {
-    my ( $self, $headers ) = @_;
-    if ( $self->set ) {
-        Plack::Util::header_iter($self->set, sub {Plack::Util::header_set($headers, @_)});
-    }
-    if ( $self->append ) {
-        push @$headers, @{$self->append};
-    }
-    if ( $self->unset ) {
-        Plack::Util::header_remove($headers, $_) for @{$self->unset};
-    }
-}
+our $VERSION = '0.06';
 
 sub call {
     my $self = shift; 
@@ -30,15 +18,38 @@ sub call {
         $res,
         sub {
             my $res = shift;
-            my $headers = $res->[1];
-            my $code = $self->code;
-            if ( $code ) {
-               if ( $res->[0] == $code ) {
-                    $self->mangle_headers($headers);
-               }
+
+            if ($self->code and $self->code ne $res->[0]) {
+                return;
             }
-            else {
-                $self->mangle_headers($headers);
+
+            my $headers = $res->[1];
+
+            if ($self->when) {
+                my @when  = @{$self->when};
+                my $match = 0;
+                while (my($key, $check) = splice @when, 0, 2) {
+                    my $value = Plack::Util::header_get($headers, $key);
+                    if (!defined $check) {            # missing header
+                        next if defined $value;     
+                    } elsif( ref $check ) {           # regex match header
+                        next if $value !~ $check;
+                    } elsif ( $value ne $check ) {    # exact header
+                        next;
+                    }
+                    $match = 1; 
+                    last;
+                }
+                return unless $match;
+            }
+            if ( $self->set ) {
+                Plack::Util::header_iter($self->set, sub {Plack::Util::header_set($headers, @_)});
+            }
+            if ( $self->append ) {
+                push @$headers, @{$self->append};
+            }
+            if ( $self->unset ) {
+                Plack::Util::header_remove($headers, $_) for @{$self->unset};
             }
         }
     );
@@ -56,16 +67,19 @@ Plack::Middleware::Header - modify HTTP response headers
 
   use Plack::Builder;
 
-  my $app = sub {['200', [], ['hello']]};
   builder {
       enable 'Header',
-        set => ['X-Plack-One' => '1'],
+        set    => ['X-Plack-One' => '1'],
         append => ['X-Plack-Two' => '2'],
-        unset => ['X-Plack-Three'];
+        unset  => ['X-Plack-Three'];
       enable 'Header',
-        code => '404',
-        set => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
-      $app;
+        code   => '404',
+        set    => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
+      enable 'Header',
+        when   => ['Content-Type' => qr{^text/}],
+        set    => ['Content-Type' => 'text/plain'];
+
+      sub {['200', [], ['hello']]};
   };
 
 =head1 DESCRIPTION
@@ -88,7 +102,7 @@ it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-L<Plack::Middleware> L<Plack::Builder>
+L<Plack::Middleware>, L<Plack::Builder>
 
 =encoding utf8
 
