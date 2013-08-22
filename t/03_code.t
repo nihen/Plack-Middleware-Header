@@ -4,11 +4,10 @@ use Test::More;
 use HTTP::Request::Common;
 use Plack::Builder;
 use Plack::Test;
-use Cwd;
 
 my $app = builder {
     enable 'Header',
-        status_code => '404',
+        code => '404',
         set => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
     enable 'Header',
         set => ['X-Plack-One' => 'one'];
@@ -50,7 +49,5 @@ test_psgi app => $app, client => sub {
         };
     }
 };
-
-
 
 done_testing;

@@ -3,13 +3,16 @@ NAME
 
 SYNOPSIS
       use Plack::Builder;
- 
+
       my $app = sub {['200', [], ['hello']]};
       builder {
           enable 'Header',
             set => ['X-Plack-One' => '1'],
             append => ['X-Plack-Two' => '2'],
             unset => ['X-Plack-Three'];
+          enable 'Header',
+            code => '404',
+            set => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
           $app;
       };
 
@@ -18,6 +21,9 @@ DESCRIPTION
 
 AUTHOR
     Masahiro Chiba
+
+CONTRIBUTORS
+    Wallace Reis "wreis@cpan.org", Jakob Voß <voss@gbv.>
 
 LICENSE
     This library is free software; you can redistribute it and/or modify it

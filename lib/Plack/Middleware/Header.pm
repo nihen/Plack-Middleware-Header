@@ -3,11 +3,11 @@ package Plack::Middleware::Header;
 use strict;
 use 5.008_001;
 use parent qw(Plack::Middleware);
-use Plack::Util::Accessor qw(status_code set append unset);
+use Plack::Util::Accessor qw(code set append unset);
 
 use Plack::Util;
 
-our $VERSION = '0.05';
+our $VERSION = '0.051';
 
 sub mangle_headers {
     my ( $self, $headers ) = @_;
@@ -31,9 +31,9 @@ sub call {
         sub {
             my $res = shift;
             my $headers = $res->[1];
-            my $status_code = $self->status_code;
-            if ( $status_code ) {
-               if ( $res->[0] == $status_code ) {
+            my $code = $self->code;
+            if ( $code ) {
+               if ( $res->[0] == $code ) {
                     $self->mangle_headers($headers);
                }
             }
@@ -63,7 +63,7 @@ Plack::Middleware::Header - modify HTTP response headers
         append => ['X-Plack-Two' => '2'],
         unset => ['X-Plack-Three'];
       enable 'Header',
-        status_code => '404',
+        code => '404',
         set => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
       $app;
   };
@@ -78,7 +78,8 @@ Masahiro Chiba
 
 =head1 CONTRIBUTORS
 
-Wallace Reis C<wreis@cpan.org>
+Wallace Reis C<wreis@cpan.org>,
+Jakob Voß
 
 =head1 LICENSE
 
@@ -88,5 +89,7 @@ it under the same terms as Perl itself.
 =head1 SEE ALSO
 
 L<Plack::Middleware> L<Plack::Builder>
+
+=encoding utf8
 
 =cut
