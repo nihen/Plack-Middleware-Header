@@ -46,7 +46,9 @@ sub call {
                 return unless $match;
             }
             if ( $self->set ) {
-                Plack::Util::header_iter($self->set, sub {Plack::Util::header_set($headers, @_)});
+                Plack::Util::header_iter(
+                    $self->set, sub {Plack::Util::header_set($headers, @_)}
+                );
             }
             if ( $self->append ) {
                 push @$headers, @{$self->append};
@@ -83,16 +85,18 @@ __END__
 
 =head1 DESCRIPTION
 
+This L<Plack::Middleware> simplifies creation (C<set> or C<append>), deletion
+(C<unset>), and modification (C<set>) of L<PSGI> response headers. The
+modification can be enabled based on response code (C<code>) or existing
+response headers(C<when>). Use L<Plack::Middleware::Conditional> to enable the
+middleware based in I<request> headers.
+
 Plack::Middleware::Headers
-
-=head1 AUTHOR
-
-Masahiro Chiba
 
 =head1 CONTRIBUTORS
 
-Wallace Reis C<wreis@cpan.org>,
-Jakob Voß
+This module is an extened fork of L<Plack::Middleware::Header>, originally
+created by Masahiro Chiba. Additional contributions by Wallace Reis.
 
 =head1 SEE ALSO
 
