@@ -1,23 +1,23 @@
 NAME
-    Plack::Middleware::Header - modify HTTP response headers
+    Plack::Middleware::Headers - modify HTTP response headers
 
 SYNOPSIS
       use Plack::Builder;
 
       my $app = sub {['200', [], ['hello']]};
       builder {
-          enable 'Header',
+          enable 'Headers',
             set => ['X-Plack-One' => '1'],
             append => ['X-Plack-Two' => '2'],
             unset => ['X-Plack-Three'];
-          enable 'Header',
+          enable 'Headers',
             code => '404',
             set => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
           $app;
       };
 
 DESCRIPTION
-    Plack::Middleware::Header
+    Plack::Middleware::Headers
 
 AUTHOR
     Masahiro Chiba

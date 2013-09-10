@@ -15,7 +15,7 @@ my @tests = (
 
 while (my ($has, $want) = splice @tests, 0, 2) {
     my $app = builder {
-        enable 'Header',
+        enable 'Headers',
             set  => ['Content-Type' => 'text/plain'],
             when => [
                 'Content-Type' => qr{^text/}, 

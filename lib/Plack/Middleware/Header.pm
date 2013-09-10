@@ -1,4 +1,4 @@
-package Plack::Middleware::Header;
+package Plack::Middleware::Headers;
 
 use strict;
 use 5.008_001;
@@ -61,21 +61,21 @@ __END__
 
 =head1 NAME
 
-Plack::Middleware::Header - modify HTTP response headers
+Plack::Middleware::Headers - modify HTTP response headers
 
 =head1 SYNOPSIS
 
   use Plack::Builder;
 
   builder {
-      enable 'Header',
+      enable 'Headers',
         set    => ['X-Plack-One' => '1'],
         append => ['X-Plack-Two' => '2'],
         unset  => ['X-Plack-Three'];
-      enable 'Header',
+      enable 'Headers',
         code   => '404',
         set    => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
-      enable 'Header',
+      enable 'Headers',
         when   => ['Content-Type' => qr{^text/}],
         set    => ['Content-Type' => 'text/plain'];
 
@@ -84,7 +84,7 @@ Plack::Middleware::Header - modify HTTP response headers
 
 =head1 DESCRIPTION
 
-Plack::Middleware::Header
+Plack::Middleware::Headers
 
 =head1 AUTHOR
 

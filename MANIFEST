@@ -19,7 +19,7 @@ inc/Test/Base/Filter.pm
 inc/Test/Builder.pm
 inc/Test/Builder/Module.pm
 inc/Test/More.pm
-lib/Plack/Middleware/Header.pm
+lib/Plack/Middleware/Headers.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml

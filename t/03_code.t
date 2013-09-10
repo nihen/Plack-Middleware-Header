@@ -6,10 +6,10 @@ use Plack::Builder;
 use Plack::Test;
 
 my $app = builder {
-    enable 'Header',
+    enable 'Headers',
         code => '404',
         set => ['X-Robots-Tag' => 'noindex, noarchive, follow'];
-    enable 'Header',
+    enable 'Headers',
         set => ['X-Plack-One' => 'one'];
     sub {
         my $env = shift;

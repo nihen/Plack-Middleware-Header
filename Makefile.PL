@@ -1,7 +1,7 @@
 use inc::Module::Install;
-name 'Plack-Middleware-Header';
-all_from 'lib/Plack/Middleware/Header.pm';
-readme_from 'lib/Plack/Middleware/Header.pm';
+name 'Plack-Middleware-Headers';
+all_from 'lib/Plack/Middleware/Headers.pm';
+readme_from 'lib/Plack/Middleware/Headers.pm';
 
 requires 'parent';
 requires 'Plack::Middleware';
