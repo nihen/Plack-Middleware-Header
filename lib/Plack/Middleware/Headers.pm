@@ -1,4 +1,5 @@
 package Plack::Middleware::Headers;
+#ABSTRACT: modify HTTP response headers
 
 use strict;
 use 5.008_001;
@@ -8,7 +9,7 @@ use Plack::Util::Accessor qw(set append unset code when);
 use Plack::Util;
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.06';
+#VERSION
 
 sub call {
     my $self = shift; 
@@ -59,10 +60,6 @@ sub call {
 
 __END__
 
-=head1 NAME
-
-Plack::Middleware::Headers - modify HTTP response headers
-
 =head1 SYNOPSIS
 
   use Plack::Builder;
@@ -94,11 +91,6 @@ Masahiro Chiba
 
 Wallace Reis C<wreis@cpan.org>,
 Jakob Voß
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
