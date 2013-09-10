@@ -31,8 +31,10 @@ sub call {
                 my $match = 0;
                 while (my($key, $check) = splice @when, 0, 2) {
                     my $value = Plack::Util::header_get($headers, $key);
-                    if (!defined $check) {            # missing header
+                    if (!defined $check) {            # missing header check
                         next if defined $value;     
+                    } elsif( !defined $value ) {      # header missing
+                        next;
                     } elsif( ref $check ) {           # regex match header
                         next if $value !~ $check;
                     } elsif ( $value ne $check ) {    # exact header
