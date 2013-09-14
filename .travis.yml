@@ -10,7 +10,7 @@ perl:
 
 matrix:
     allow_failures:
-        perl: "5.8"
+        - perl: "5.8"
 
 before_install:
     - git config --global user.name "TravisCI"
