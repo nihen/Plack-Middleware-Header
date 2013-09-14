@@ -7,20 +7,20 @@ use Plack::Test;
 use Cwd;
 
 my $set_handler = builder {
-    enable "Plack::Middleware::Header",
+    enable "Plack::Middleware::Headers",
         set => ['X-Plack-One' => 'one']
     ;
     sub { ['200', ['Content-Type' => 'text/html'], ['hello world']] };
 };
 
 my $append_handler = builder {
-    enable "Plack::Middleware::Header",
+    enable "Plack::Middleware::Headers",
         append => ['X-Plack-One' => 'two']
     ;
     $set_handler;
 };
 my $unset_handler = builder {
-    enable "Plack::Middleware::Header",
+    enable "Plack::Middleware::Headers",
         unset => ['X-Plack-One']
     ;
     $append_handler;

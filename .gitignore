@@ -1,7 +1,9 @@
-META.yml
-Makefile
-inc/
+.svn/
+.git/
+MANIFEST*
+*.old
+blib/
 pm_to_blib
-*~
-blib
-
+*.gz
+*.cvsignore
+Plack-*
