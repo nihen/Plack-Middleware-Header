@@ -22,13 +22,23 @@ my $app = builder {
     };
 };
 
+# See https://github.com/libwww-perl/http-message/issues/2#issuecomment-24443074
+sub headers_as_hash {
+    my $h = shift;
+    return { 
+        map { $_ => $h->header($_) } grep { $_ ne '::std_case' }
+        keys %$h
+    }
+}
+
 test_psgi app => $app, client => sub {
     my $cb = shift;
 
     {
         my $req = GET "http://localhost/";
         my $res = $cb->($req);
-        is_deeply $res->headers, {
+        print ref($res)."\n";
+        is_deeply headers_as_hash($res->headers), {
             'content-type' => 'text/plain',
             'x-plack-one' => 'one'
         };
@@ -42,7 +52,7 @@ test_psgi app => $app, client => sub {
         my $req = GET "http://localhost/foo";
         my $res = $cb->($req);
         ok($res->code == 404) or diag($res->code);
-        is_deeply $res->headers, {
+        is_deeply headers_as_hash($res->headers), {
             'content-type' => 'text/plain',
             'x-plack-one' => 'one',
             'x-robots-tag' => 'noindex, noarchive, follow'

@@ -8,6 +8,10 @@ perl:
     - "5.10"
     - "5.8"
 
+matrix:
+    allow_failures:
+        perl: "5.8"
+
 before_install:
     - git config --global user.name "TravisCI"
     - git config user.email 'travis@nowhere.dne'
