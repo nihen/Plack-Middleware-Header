@@ -1,4 +1,6 @@
 use inc::Module::Install;
+use Module::Install::Repository;
+use Module::Install::TestBase;
 name 'Plack-Middleware-Header';
 all_from 'lib/Plack/Middleware/Header.pm';
 readme_from 'lib/Plack/Middleware/Header.pm';
